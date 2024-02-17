@@ -1,0 +1,34 @@
+**** giao vu ***
+- khoa luan search:
+    + [post] search khoa luan theo nam hoc
+
+- khoa luan detail:
+    + [get]khoa luan detail
+    + [put]chinh sua khoa luan:
+        + [post]search sinh vien dang ky khoa luan
+    + [delete]khoa khoa luan
+
+- hoi dong search:
+    + [post]search hoi dong theo nam hoc
+
+- hoi dong detail:
+    + [get]hoi dong
+    + [put]chinh sua hoi dong theo id:
+        + [post]search giao vien (them vao )
+
+- thong ke:
+    + [get]thong ke theo nam hoc
+
+- quy dinh:
+    + [get]list all quy dinh, [put]chinh sua quy dinh
+
+
+*** giao vien ***
+- khoa luan search:
+    + [get]list all khoa luan cua giao vien theo nam:
+        + [post]cham diem, [put]sua diem
+
+
+*** hoc sinh ***
+- [get]xem khoa luan
+- [post]dang ky khoa luan

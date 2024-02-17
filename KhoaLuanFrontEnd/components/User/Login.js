@@ -19,8 +19,8 @@ const Login = ({ Navigation }) => {
                             <Text style = {UserStyle.button}>Đăng nhập</Text>
                         </TouchableOpacity>
                     </> */}
-                    <Text style = {UserStyle.button2}>Google</Text>
-                    <Text style = {UserStyle.button3}>Facebook</Text>
+                    {/* <Text style = {UserStyle.button2}>Google</Text>
+                    <Text style = {UserStyle.button3}>Facebook</Text> */}
             </View>
         );
 }
