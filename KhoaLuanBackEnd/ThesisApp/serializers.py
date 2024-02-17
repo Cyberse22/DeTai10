@@ -84,7 +84,19 @@ class CouncilSerializer(ModelSerializer):
         fields = '__all__'
 
 
+class CouncilListSerializer(ModelSerializer):
+    class Meta:
+        model = Council
+        fields = '__all__'
+
+
 class CriteriaSerializer(ModelSerializer):
+    class Meta:
+        model = Criteria
+        fields = '__all__'
+
+
+class CriteriaListSerializer(ModelSerializer):
     class Meta:
         model = Criteria
         fields = '__all__'
@@ -93,4 +105,10 @@ class CriteriaSerializer(ModelSerializer):
 class ScoreSerializer(ModelSerializer):
     class Meta:
         model = Score
-        field = '__all__'
+        fields = '__all__'
+
+
+class ScoreListSerializer(ModelSerializer):
+    class Meta:
+        model = Score
+        fields = '__all__'

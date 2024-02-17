@@ -1,3 +1,5 @@
+from django import forms
+from ckeditor.widgets import CKEditorWidget
 from cloudinary.models import CloudinaryField
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -29,6 +31,7 @@ class BaseModel(models.Model):
         abstract = True
 
 
+# User Models
 class User(AbstractUser):
     role = models.CharField(max_length=255, choices=Role.choices, default=Role.SINHVIEN)
     major = models.CharField(max_length=255, choices=Major.choices, default=Major.IT)
@@ -61,7 +64,7 @@ class Student(models.Model):
                                      primary_key=True)
 
     def __str__(self):
-        return self.user_info
+        return self.user_info.username
 
 
 class Employee(models.Model):
@@ -108,15 +111,32 @@ class Council(BaseModel):
         return self.name
 
 
+# Thesis Models
 class Thesis(BaseModel):
     title = models.CharField(max_length=255)
     students = models.ManyToManyField(Student, related_name='students_thesis')
     advisors = models.ManyToManyField(Lecture, related_name='advisors_thesis')
     reviewer = models.ForeignKey(Lecture, on_delete=models.CASCADE, related_name='reviewer_thesis')
     council = models.ForeignKey(Council, on_delete=models.CASCADE, related_name='council_thesis')
-    file_thesis = models.FileField(upload_to='static/file_thesis', blank=True)
     date_defend = models.DateField()
     is_defend = models.BooleanField(default=False)
+
+
+class Upload_Thesis(models.Model):
+    thesis = models.OneToOneField(Thesis, on_delete=models.CASCADE, related_name='upload')
+    upload_file = models.FileField(upload_to='pdf_files', null=True, blank=True)
+
+    def __str__(self):
+        return f'Upload for thesis {self.thesis}'
+
+
+class ThesisForm(forms.ModelForm):
+    class Meta:
+        model = Thesis
+        fields = ['title', 'students', 'advisors']
+        widgets = {
+            'title': CKEditorWidget()
+        }
 
 
 class Criteria(BaseModel):

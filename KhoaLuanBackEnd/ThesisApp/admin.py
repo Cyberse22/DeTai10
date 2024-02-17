@@ -57,7 +57,7 @@ class FacultyAdminSite(admin.ModelAdmin):
 
     def avatar_image(self, obj):
         return mark_safe(
-            '<img src="static/{url}" width="120" />'.format(url=obj.image.name)
+            '<img src="static/{url}" width="120"/>'.format(url=obj.image.name)
         )
 
 

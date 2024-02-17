@@ -56,8 +56,67 @@ class StudentViewSet(ViewSet, generics.RetrieveAPIView):
 class ThesisViewSet(ViewSet, generics.ListAPIView, generics.RetrieveAPIView, generics.CreateAPIView):
     queryset = Thesis.objects.filter(active=True)
     serializer_class = ThesisSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
+
+    def form_thesis(request):
+        if request.method == 'POST':
+            form = ThesisForm(request.POST)
+            if form.is_valid():
+                form.save()
+            else:
+                form = ThesisForm()
+            return render(request, 'form_thesis.html', {'form': form})
 
     def list(self, request, *args, **kwargs):
         theses = Thesis.objects.all()
         return Response(ThesisListSerializer(theses, many=True, context={'request': request}).data)
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+
+        serializer = self.get_serializer(data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CouncilViewSet(ViewSet, generics.CreateAPIView, generics.ListAPIView, generics.RetrieveAPIView):
+    queryset = Council.objects.all()
+    serializer_class = CouncilSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def list(self, request, *args, **kwargs):
+        councils = Council.objects.all()
+        return Response(CouncilListSerializer(councils, many=True, context={'request': request}).data)
+
+
+class ScoreViewSet(ViewSet, generics.CreateAPIView, generics.ListAPIView, generics.RetrieveAPIView):
+    queryset = Score.objects.all()
+    serializer_class = CouncilSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def list(self, request, *args, **kwargs):
+        scores = Score.objects.all()
+        return Response(ScoreListSerializer(scores, many=True, context={'request': request}).data)
+
+
+class CriteriaViewSet(ViewSet, generics.CreateAPIView, generics.ListAPIView, generics.RetrieveAPIView):
+    queryset = Criteria.objects.all()
+    serializer_class = CriteriaSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def list(self, request, *args, **kwargs):
+        criteria = Criteria.objects.all()
+        return Response(CriteriaListSerializer(criteria, many=True, context={'request': request}). data)
+
+    @action(methods=['post'], detail=False)
+    def create_criteria(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -133,7 +133,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CKEDITOR_UPLOAD_PATH = 'images/CKEDITOR'
+CKEDITOR_UPLOAD_PATH = 'from/upload_form'
 
 CLOUDINARY = {
     'cloud_name': 'dnjupjumj',
@@ -152,3 +152,8 @@ REST_FRAMEWORK = {
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     )
 }
+
+# OAuth2
+# Client_id = NdlcgRMEw5NYGBktrF4GaHCio8MZm1P10oNpK1VQ
+# Client_secret = ZD3SzGYjniMSaesmiC8fUjoxJDTbWA4KiI1lQGAE947D2SwOJKqHVGHXmNRFdFsZ1llQgWbPp4fHdZXeF5eNDdpG7MNvzAuj7aRMKli7UZky3xa2bR2wZYDMkSVr5wSV
+
