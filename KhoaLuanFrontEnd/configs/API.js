@@ -19,6 +19,8 @@ export const endpoints = {
     addScore: (thesisId) => `thesis/${thesisId}/add-score/`,
     updateScore: (thesisId) => `thesis/${thesisId}/update-score/`,
     myScore: (thesisId) => `thesis/${thesisId}/my-score/`,
+    updateThesis: (thesisId) => `thesis/${thesisId}/update-thesis`,
+    uploadFile: (thesisId) => `thesis/${thesisId}/upload-files`,
 
     //council
     councils: 'council/',
@@ -31,9 +33,11 @@ export const endpoints = {
     statusCouncil: (councilId) => `council/${councilId}/change-status/`,
     lectureCouncil: 'council/lecture-council/',
     lectureThesis: (councilId) => `council/${councilId}/lecture-thesis/`,
+    addThesis: (councilId) => `council/${councilId}/add-thesis`,
 
     //other
     sendMail: 'thesis/send-mail/',
+    plot: 'plot/'
 }
 
 export const authAPI = (accessToken) => axios.create({

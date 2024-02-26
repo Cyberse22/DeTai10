@@ -3,18 +3,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import LoginScreen from './components/User/Login';
-import LecturerHome from './components/giaovien/Home';
+import LecturerHome from './components/giaovien/LectureHome';
 import ScoreScreen from './components/giaovien/Score';
 import CouncilFormation from './components/giaovu/CouncilFormation';
 import CouncilLock from './components/giaovu/CouncilLock';
 import CriteriaSetting from './components/giaovu/CriteriaSetting';
-import DeanHome from './components/giaovu/Home';
+import DeanHome from './components/giaovu/DeanHome';
 import Publication from './components/giaovu/Publication';
 import ReviewerAssignment from './components/giaovu/ReviewAssignment';
 import Statistics from './components/giaovu/Statistics';
 import ThesisRecord from './components/giaovu/ThesisRecord';
 import Chat from './components/sinhvien/Chat';
-import StudentHome from './components/sinhvien/Home';
+import StudentHome from './components/sinhvien/StudentHome';
 
 
 const Stack = createStackNavigator();
@@ -44,18 +44,18 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         {isLoggedIn ? (
-          userRole === 'student' ? (
+          userRole === 'Student' ? (
             <>
-              <Stack.Screen name="StudentHome" component={StudentHome} />
-              <Stack.Screen name="Chat" component={Chat} />
+              <Stack.Screen name='StudentHome' component={StudentHome} />
+              <Stack.Screen name='Chat' component={Chat} />
             </>
-          ) : userRole === 'lecturer' ? (
+          ) : userRole === 'Lecture' ? (
             <>
               <Stack.Screen name="LecturerHome" component={LecturerHome} />
               <Stack.Screen name="Score" component={ScoreScreen} />
               <Stack.Screen name="Chat" component={Chat} />
             </>
-          ) : userRole === 'dean' ? (
+          ) : userRole === 'Dean' ? (
             <>
               <Stack.Screen name="DeanHome" component={DeanHome} />
               <Stack.Screen name="ThesisRecord" component={ThesisRecord} />

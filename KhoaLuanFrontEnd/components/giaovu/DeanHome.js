@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const DeanHome = () => {
-  // Dữ liệu tĩnh mô phỏng thông tin của giáo vụ khoa và các khoá luận trong hệ thống
   const deanInfo = {
     name: 'Nguyễn Thị B',
     email: 'nguyenthic@example.com',
@@ -16,47 +15,38 @@ const DeanHome = () => {
   ];
 
   const handleManageUsers = () => {
-    // Xử lý chức năng quản lý người dùng
     console.log('Quản lý người dùng');
   };
 
   const handleRecordThesis = () => {
-    // Xử lý chức năng ghi nhận khoá luận
     console.log('Ghi nhận khoá luận');
   };
 
   const handleAssignOpponent = () => {
-    // Xử lý chức năng phân công giảng viên phản biện
     console.log('Phân công giảng viên phản biện');
   };
 
   const handleEstablishCouncil = () => {
-    // Xử lý chức năng thành lập hội đồng bảo vệ
     console.log('Thành lập hội đồng bảo vệ');
   };
 
   const handleLockCouncil = () => {
-    // Xử lý chức năng khoá hội đồng
     console.log('Khoá hội đồng');
   };
 
   const handleSetCriteria = () => {
-    // Xử lý chức năng thiết lập tiêu chí chấm điểm
     console.log('Thiết lập tiêu chí chấm điểm');
   };
 
   const handleViewScores = () => {
-    // Xử lý chức năng xem thống kê điểm khoá luận
     console.log('Xem thống kê điểm khoá luận');
   };
 
   const handlePublishScores = () => {
-    // Xử lý chức năng xuất bản điểm tổng hợp
     console.log('Xuất bản điểm tổng hợp');
   };
 
   const handleLogout = () => {
-    // Xử lý chức năng đăng xuất
     console.log('Đăng xuất');
   };
 

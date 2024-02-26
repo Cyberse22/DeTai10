@@ -161,7 +161,7 @@ CLIENT_ID = "P2irBR0EJ3bguVmM6BDa874ZbzPirEmqDuKqNBnF"
 CLIENT_SECRET = "JZpzMNfaGHmXObUVT3NUlw7q1dKjl3rcXobL3vk6Hxab2zoytwGrr9gPN4lXdNOba5QzwgrKQm5OfLCSUJcQXoEOJffMaAghgVSx0Wm08E9IPPuWRmBgBrj88xYPV4Vp"
 
 OAUTH2_PROVIDER = {
-    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.OAuthLibCore'
+    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore'
 }
 
 # CORS_ALLOW_ALL_ORIGINS = True
