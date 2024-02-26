@@ -28,8 +28,8 @@ const LoginScreen = ({ navigation }) => {
       let res = await API.post(endpoints['login'], {
         'username': username,
         'password': password,
-        'client_id': 'P2irBR0EJ3bguVmM6BDa874ZbzPirEmqDuKqNBnF',
-        'client_secret': 'cVm4w4hSdy4MtwbP4KuNgXkGPeQJ9yrQdBvXHGR6b3e97F2bYqQ81XJ49FEufzjcw4SKwpuOZQiCLsNelHY1MkuYTGBRcSqtWmSlebSUk27WfyDskCB2VeCQihnEKdZ2',
+        'client_id': '241CnQ7mNkCafYma02PmR9b6fmFsoLR0IchRI91n',
+        'client_secret': 'HWtHDL1jxgomoK9o3WEwZgMI7CNu4rTrH0KLSanw7G3tGpY1qXpKtDol09vpf3ACyIqBq2pleqQRbN5pdCTiCnmywoQL8nKMBap3ZQARg6HP9A7xMmNY77zeujdz7hbu',
         'grant_type': 'password'
       });
       await AsyncStorage.setItem('access_token', res.data.access_token);
@@ -38,7 +38,19 @@ const LoginScreen = ({ navigation }) => {
         type: 'login',
         payload: user.data
       });
-      navigation.navigate('StudentHome');
+      switch (user.data.role) {
+        case 'Student':
+          navigation.navigate('StudentHome');
+          break;
+        case 'Dean':
+          navigation.navigate('DeanHome');
+          break;
+        case 'Lecturer':
+          navigation.navigate('LectureHome');
+          break;
+        default:
+          break;
+      }
     } catch (ex) {
       console.error(ex);
     } finally {

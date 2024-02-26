@@ -41,12 +41,12 @@ export const endpoints = {
 }
 
 export const authAPI = (accessToken) => axios.create({
-    baseURL: "http://127.0.0.1:8000/",
+    baseURL: "https://kietnguyen2226.pythonanywhere.com/",
     headers: {
         "Authorization" : `bearer ${accessToken}`
     }
 })
 
 export default axios.create({
-    baseURL: "http://127.0.0.1:8000/"
+    baseURL: "https://kietnguyen2226.pythonanywhere.com/"
 })
