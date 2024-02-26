@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import cloudinary
+import pymysql
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -26,7 +27,6 @@ SECRET_KEY = 'django-insecure-#^as^1tg&w^%e+i5!x=0-#7c*b1z&#&4m#qwuj7yua(yu!x5ln
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -41,11 +41,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'oauth2_provider',
     'drf_yasg',
-    'ckeditor',
-    'ckeditor_uploader',
+    'debug_toolbar',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,6 +55,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+import pymysql
+pymysql.install_as_MySQLdb()
 
 ROOT_URLCONF = 'Thesis.urls'
 
@@ -75,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Thesis.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -89,8 +92,11 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'ThesisApp.User'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
+AUTH_USER_MODEL = 'ThesisApp.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -110,50 +116,59 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Ho_Chi_Minh'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_L10N = True
 
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_ROOT = f'{BASE_DIR}/ThesisApp/static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CKEDITOR_UPLOAD_PATH = 'from/upload_form'
-
-CLOUDINARY = {
-    'cloud_name': 'dnjupjumj',
-    'api_key': '962953924372766',
-    'api_secret': 'ipZJVNE1Pe9l25ft3ZI-9AHI14E'
-}
+cloudinary.config(
+    cloud_name="dnjupjumj",
+    api_key="962953924372766",
+    api_secret="ipZJVNE1Pe9l25ft3ZI-9AHI14E"
+)
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS':
-        'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2,
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-    ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': (
+        'rest_framework.pagination.PageNumberPagination'),
+    'PAGE_SIZE': '5'
 }
 
 # OAuth2
-# Client_id = NdlcgRMEw5NYGBktrF4GaHCio8MZm1P10oNpK1VQ
-# Client_secret = ZD3SzGYjniMSaesmiC8fUjoxJDTbWA4KiI1lQGAE947D2SwOJKqHVGHXmNRFdFsZ1llQgWbPp4fHdZXeF5eNDdpG7MNvzAuj7aRMKli7UZky3xa2bR2wZYDMkSVr5wSV
+CLIENT_ID = "P2irBR0EJ3bguVmM6BDa874ZbzPirEmqDuKqNBnF"
+CLIENT_SECRET = "JZpzMNfaGHmXObUVT3NUlw7q1dKjl3rcXobL3vk6Hxab2zoytwGrr9gPN4lXdNOba5QzwgrKQm5OfLCSUJcQXoEOJffMaAghgVSx0Wm08E9IPPuWRmBgBrj88xYPV4Vp"
 
+OAUTH2_PROVIDER = {
+    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.OAuthLibCore'
+}
+
+# CORS_ALLOW_ALL_ORIGINS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "kietnguyen2226@gmail.com"
+EMAIL_HOST_PASSWORD = "uxnn vlnw irfh iwsm"
