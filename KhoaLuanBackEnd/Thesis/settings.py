@@ -57,6 +57,7 @@ MIDDLEWARE = [
 ]
 
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
 ROOT_URLCONF = 'Thesis.urls'
@@ -135,7 +136,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_ROOT = f'{BASE_DIR}/ThesisApp/static/'
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -159,6 +159,10 @@ REST_FRAMEWORK = {
 # OAuth2 Pythonanywhere
 CLIENT_ID = "241CnQ7mNkCafYma02PmR9b6fmFsoLR0IchRI91n"
 CLIENT_SECRET = "HWtHDL1jxgomoK9o3WEwZgMI7CNu4rTrH0KLSanw7G3tGpY1qXpKtDol09vpf3ACyIqBq2pleqQRbN5pdCTiCnmywoQL8nKMBap3ZQARg6HP9A7xMmNY77zeujdz7hbu"
+
+# OAuth2 Local
+CLIENT_ID = 'CxlcnyvI3uf7U1IbM7jhxGEK1vLfvNwPlURmnHxY'
+CLIENT_SECRET = '06ouPIpUe56JFN0WAUuMyhw4YcKSrEIT7k3SWVn0OOSZVD6ZDGRApd6Gp0EhSwhIBFLcJSzehoeXX5Ig301w2OxOcRcROeuOPi07Kfb4IvzwF5yKkqr0kAylgrdwE9M0'
 
 OAUTH2_PROVIDER = {
     'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore'
