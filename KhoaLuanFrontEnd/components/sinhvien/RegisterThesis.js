@@ -1,27 +1,43 @@
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useContext, useState } from 'react'
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import MyContext from '../../configs/MyContext'
 
 const Register = () => {
+  const [user, dispatch] = useContext(MyContext)
+
+  const logout = () => {
+    dispatch({
+      type: 'logout',
+    })
+  }
+
   // Dữ liệu tĩnh về danh sách giảng viên hướng dẫn
   const instructors = [
     { id: 1, name: 'Dr. John Doe' },
     { id: 2, name: 'Dr. Jane Smith' },
     { id: 3, name: 'Dr. David Johnson' },
-  ];
+  ]
 
-  const [thesisTitle, setThesisTitle] = useState('');
-  const [selectedInstructor, setSelectedInstructor] = useState(null);
-  const [description, setDescription] = useState('');
+  const [thesisTitle, setThesisTitle] = useState('')
+  const [selectedInstructor, setSelectedInstructor] = useState(null)
+  const [description, setDescription] = useState('')
 
   const handleRegister = () => {
     // Xử lý đăng ký khoá luận
-    alert('Chức năng đang được phát triển');
-  };
+    alert('Chức năng đang được phát triển')
+  }
 
   const handleCancel = () => {
     // Xử lý hủy đăng ký
-    alert('Hủy đăng ký');
-  };
+    alert('Hủy đăng ký')
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -30,7 +46,7 @@ const Register = () => {
         style={styles.input}
         value={thesisTitle}
         onChangeText={setThesisTitle}
-        placeholder="Nhập tên khoá luận"
+        placeholder='Nhập tên khoá luận'
       />
       <View style={styles.selectContainer}>
         <Text style={styles.label}>Chọn giảng viên hướng dẫn:</Text>
@@ -40,7 +56,9 @@ const Register = () => {
               key={instructor.id}
               style={[
                 styles.selectOption,
-                selectedInstructor && selectedInstructor.id === instructor.id && styles.selectedOption,
+                selectedInstructor &&
+                  selectedInstructor.id === instructor.id &&
+                  styles.selectedOption,
               ]}
               onPress={() => setSelectedInstructor(instructor)}
             >
@@ -55,19 +73,25 @@ const Register = () => {
         onChangeText={setDescription}
         multiline
         numberOfLines={4}
-        placeholder="Nhập mô tả khoá luận"
+        placeholder='Nhập mô tả khoá luận'
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, styles.registerButton]} onPress={handleRegister}>
+        <TouchableOpacity
+          style={[styles.button, styles.registerButton]}
+          onPress={handleRegister}
+        >
           <Text style={styles.buttonText}>Đăng ký</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={handleCancel}>
+        <TouchableOpacity
+          style={[styles.button, styles.cancelButton]}
+          onPress={handleCancel}
+        >
           <Text style={styles.buttonText}>Hủy</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -136,6 +160,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-});
+})
 
-export default Register;
+export default Register

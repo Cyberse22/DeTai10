@@ -1,39 +1,41 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import MyContext from '../../configs/MyContext'
+import logout from '../User/Logout'
+import { useNavigation } from '@react-navigation/native'
+import Logout from '../User/Logout'
 
 const LecturerHome = () => {
+  const [user, dispatch] = useContext(MyContext)
+  const navigation = useNavigation()
+
   // Dữ liệu tĩnh mô phỏng thông tin của giảng viên và các khoá luận mà giảng viên hướng dẫn, phản biện, hoặc là thành viên hội đồng
   const lecturerInfo = {
     name: 'Nguyễn Văn A',
     email: 'nguyenvana@example.com',
     role: 'Giảng viên',
-  };
+  }
 
   const theses = [
     { id: 1, title: 'Khoá luận A', role: 'Hướng dẫn' },
     { id: 2, title: 'Khoá luận B', role: 'Phản biện' },
     { id: 3, title: 'Khoá luận C', role: 'Thành viên hội đồng' },
-  ];
+  ]
 
   const handleViewTheses = () => {
     // Xử lý chức năng xem danh sách các khoá luận
-    console.log('Xem danh sách khoá luận');
-  };
+    console.log('Xem danh sách khoá luận')
+  }
 
   const handleGradeTheses = () => {
     // Xử lý chức năng chấm điểm khoá luận
-    console.log('Chấm điểm khoá luận');
-  };
+    console.log('Chấm điểm khoá luận')
+  }
 
   const handleChatWithStudent = () => {
     // Xử lý chức năng chat với sinh viên
-    console.log('Chat với sinh viên');
-  };
-
-  const handleLogout = () => {
-    // Xử lý chức năng đăng xuất
-    console.log('Đăng xuất');
-  };
+    console.log('Chat với sinh viên')
+  }
 
   return (
     <View style={styles.container}>
@@ -57,13 +59,14 @@ const LecturerHome = () => {
         <TouchableOpacity style={styles.button} onPress={handleChatWithStudent}>
           <Text style={styles.buttonText}>Chat với sinh viên</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleLogout}>
-          <Text style={styles.buttonText}>Đăng xuất</Text>
-        </TouchableOpacity>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <Logout navigation={navigation} />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -87,8 +90,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    gap: 20,
   },
   button: {
     backgroundColor: '#007bff',
@@ -100,6 +104,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-});
+})
 
-export default LecturerHome;
+export default LecturerHome

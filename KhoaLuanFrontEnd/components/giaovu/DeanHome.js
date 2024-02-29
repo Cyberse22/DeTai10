@@ -1,54 +1,57 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import Logout from '../User/Logout'
+import { useNavigation } from '@react-navigation/native'
 
 const DeanHome = () => {
+  const navigation = useNavigation()
   const deanInfo = {
     name: 'Nguyễn Thị B',
     email: 'nguyenthic@example.com',
     role: 'Giáo vụ khoa',
-  };
+  }
 
   const theses = [
     { id: 1, title: 'Khoá luận A', status: 'Chưa ghi nhận' },
     { id: 2, title: 'Khoá luận B', status: 'Đã ghi nhận' },
     { id: 3, title: 'Khoá luận C', status: 'Chưa ghi nhận' },
-  ];
+  ]
 
   const handleManageUsers = () => {
-    console.log('Quản lý người dùng');
-  };
+    console.log('Quản lý người dùng')
+  }
 
   const handleRecordThesis = () => {
-    console.log('Ghi nhận khoá luận');
-  };
+    navigation.navigate('ThesisRecord')
+  }
 
   const handleAssignOpponent = () => {
-    console.log('Phân công giảng viên phản biện');
-  };
+    console.log('Phân công giảng viên phản biện')
+  }
 
   const handleEstablishCouncil = () => {
-    console.log('Thành lập hội đồng bảo vệ');
-  };
+    console.log('Thành lập hội đồng bảo vệ')
+  }
 
   const handleLockCouncil = () => {
-    console.log('Khoá hội đồng');
-  };
+    console.log('Khoá hội đồng')
+  }
 
   const handleSetCriteria = () => {
-    console.log('Thiết lập tiêu chí chấm điểm');
-  };
+    console.log('Thiết lập tiêu chí chấm điểm')
+  }
 
   const handleViewScores = () => {
-    console.log('Xem thống kê điểm khoá luận');
-  };
+    console.log('Xem thống kê điểm khoá luận')
+  }
 
   const handlePublishScores = () => {
-    console.log('Xuất bản điểm tổng hợp');
-  };
+    console.log('Xuất bản điểm tổng hợp')
+  }
 
   const handleLogout = () => {
-    console.log('Đăng xuất');
-  };
+    console.log('Đăng xuất')
+  }
 
   return (
     <View style={styles.container}>
@@ -72,7 +75,10 @@ const DeanHome = () => {
         <TouchableOpacity style={styles.button} onPress={handleAssignOpponent}>
           <Text style={styles.buttonText}>Phân công giảng viên phản biện</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleEstablishCouncil}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleEstablishCouncil}
+        >
           <Text style={styles.buttonText}>Thành lập hội đồng bảo vệ</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleLockCouncil}>
@@ -87,13 +93,14 @@ const DeanHome = () => {
         <TouchableOpacity style={styles.button} onPress={handlePublishScores}>
           <Text style={styles.buttonText}>Xuất bản điểm tổng hợp</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleLogout}>
-          <Text style={styles.buttonText}>Đăng xuất</Text>
-        </TouchableOpacity>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <Logout />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -126,6 +133,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: 'bold',
   },
-});
+})
 
-export default DeanHome;
+export default DeanHome

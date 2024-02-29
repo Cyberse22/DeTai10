@@ -1,43 +1,44 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { endpoints } from '../../configs/API';
-import Logout from '../User/Logout';
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { endpoints } from '../../configs/API'
+import Logout from '../User/Logout'
 
 const StudentHome = ({ navigation }) => {
-  const [studentInfo, setStudentInfo] = useState(null);
-  const [registeredThesis, setRegisteredThesis] = useState([]);
+  const [studentInfo, setStudentInfo] = useState(null)
+  const [registeredThesis, setRegisteredThesis] = useState([])
 
-  useEffect(() =>{
-    axios.get(endpoints.currentUser)
-    .then(response => {
-      setStudentInfo(response.data);
-    })
-    . catch(error => {
-      console.error(error);
-    });
+  useEffect(() => {
+    axios
+      .get(endpoints.currentUser)
+      .then((response) => {
+        setStudentInfo(response.data)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
 
-    axios.get(endpoints.myThesis)
-    .then(response => {
-      setRegisteredThesis(response.data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  }, []);
+    axios
+      .get(endpoints.myThesis)
+      .then((response) => {
+        setRegisteredThesis(response.data)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }, [])
 
   const handleRegisterThesis = () => {
-    alert('Chức năng đang được phát triển');
-  };
+    alert('Chức năng đang được phát triển')
+  }
 
   const handleViewThesisList = () => {
-    alert('Chức năng đang được phát triển');
-  };
+    alert('Chức năng đang được phát triển')
+  }
 
   const handleChatWithInstructor = () => {
-    alert('Chức năng đang được phát triển');
-  };
-  
+    alert('Chức năng đang được phát triển')
+  }
 
   return (
     <View style={styles.container}>
@@ -55,16 +56,19 @@ const StudentHome = ({ navigation }) => {
         <TouchableOpacity style={styles.button} onPress={handleViewThesisList}>
           <Text style={styles.buttonText}>Xem danh sách khoá luận</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleChatWithInstructor}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleChatWithInstructor}
+        >
           <Text style={styles.buttonText}>Chat với giảng viên</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
-        <Logout navigation={navigation} />
+        <Logout />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -96,6 +100,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-});
+})
 
-export default StudentHome;
+export default StudentHome
