@@ -209,11 +209,9 @@ class ThesisViewSet(viewsets.ViewSet, generics.ListAPIView, generics.RetrieveUpd
     def add_thesis(self, request):
         title = request.data.get('title')
         year = request.data.get('year')
-        advisors_id = request.data.get('advisors', [])
         students_id = request.data.get('students', [])
 
         try:
-            advisors = Lecture.objects.filter(pk__in=advisors_id)
             students = Student.objects.filter(pk__in=students_id)
 
             new_thesis = Thesis.objects.create(
@@ -221,7 +219,6 @@ class ThesisViewSet(viewsets.ViewSet, generics.ListAPIView, generics.RetrieveUpd
                 year=year,
             )
 
-            new_thesis.advisors.set(advisors)
             new_thesis.students.set(students)
 
             data = ThesisSerializer(new_thesis).data
@@ -233,7 +230,7 @@ class ThesisViewSet(viewsets.ViewSet, generics.ListAPIView, generics.RetrieveUpd
     @action(methods=['patch'], url_path='update-thesis', detail=True)
     def update_thesis(self, request, pk):
         thesis = self.get_object()
-        fields_to_update = ['title', 'description', 'students', 'advisors']
+        fields_to_update = ['title', 'description', 'advisors']
         try:
             for field in fields_to_update:
                 if field in request.data:
@@ -252,11 +249,11 @@ class ThesisViewSet(viewsets.ViewSet, generics.ListAPIView, generics.RetrieveUpd
 
     @action(methods=['get'], detail=False, url_path='my-thesis')
     def my_thesis(self, request):
-        my_thesis = request.user.thesis.all()
-        if my_thesis.exists():
-            serializer = ThesisSerializer(my_thesis[0])
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({'message', 'Bạn không có khóa luận nào'}, status=status.HTTP_404_NOT_FOUND)
+        student = request.user.student
+        my_thesis = Thesis.objects.filter(students=student)
+
+        serializer = self.get_serializer(my_thesis, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=['get'], detail=False, url_path='not-active')
     def not_active(self, request):
