@@ -72,10 +72,12 @@ class CouncilMemberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CouncilMember
-        fields = ['lecture', 'council_role']
+        fields = ['id', 'lecture', 'council_role']
 
 
 class CouncilSerializer(serializers.ModelSerializer):
+    members = CouncilMemberSerializer(many=True, read_only=True)
+
     class Meta:
         model = Council
         fields = ['id', 'created_date', 'updated_date', 'name', 'members']

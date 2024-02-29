@@ -19,10 +19,6 @@ class UserAdmin(admin.ModelAdmin):
     readonly_fields = ['avatar']
 
 
-class CouncilAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'is_active', 'created_date', 'updated_date']
-
-
 class CouncilMembershipAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'council', 'council_role']
 
@@ -32,9 +28,22 @@ class ScoreAdmin(admin.ModelAdmin):
     readonly_fields = ['score']
 
 
+class LectureAdmin(admin.ModelAdmin):
+    list_display = ['id', 'lecture']
+
+
+class CouncilAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'get_members_count', 'created_date']
+
+    def get_members_count(self, obj):
+        return obj.members.count()
+
+    get_members_count.short_description = 'Members Count'
+
+
 admin_site.register(User, UserAdmin)
 admin_site.register(Student)
-admin_site.register(Lecture)
+admin_site.register(Lecture, LectureAdmin)
 admin_site.register(Dean)
 admin_site.register(CouncilMember)
 admin_site.register(Council, CouncilAdmin)
