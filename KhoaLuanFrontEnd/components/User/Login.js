@@ -1,25 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { createContext, useReducer, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import API, { authAPI, endpoints } from '../../configs/API';
-
-const AppContext = createContext();
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'login':
-      return { ...state, user: action.payload };
-    default:
-      return state;
-  }
-};
+import MyContext from '../../configs/MyContext';
 
 const LoginScreen = ({ navigation }) => {
-  const [state, dispatch] = useReducer(reducer, { user: null });
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [user, dispatch] = useContext(MyContext)
 
   const login = async () => {
     setLoading(true);
@@ -32,7 +21,7 @@ const LoginScreen = ({ navigation }) => {
         'client_secret': 'HWtHDL1jxgomoK9o3WEwZgMI7CNu4rTrH0KLSanw7G3tGpY1qXpKtDol09vpf3ACyIqBq2pleqQRbN5pdCTiCnmywoQL8nKMBap3ZQARg6HP9A7xMmNY77zeujdz7hbu',
         'grant_type': 'password'
       });
-      await AsyncStorage.setItem('access_token', res.data.access_token);
+      await AsyncStorage.setItem('refesh_token', res.data.refresh_token);
       let user = await authAPI(res.data.access_token).get(endpoints['currentUser']);
       dispatch({
         type: 'login',
@@ -51,15 +40,21 @@ const LoginScreen = ({ navigation }) => {
         default:
           break;
       }
+      console.log(user.data.role)
+      console.log(res.data.access_token)
     } catch (ex) {
-      console.error(ex);
+      // if (ex.response.status === 400) {
+      //   alert('Sai tài khoản hoặc mật khẩu');
+      // } else {
+        console.error(ex);
+        alert('Lỗi hệ thống');
+      //}
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
       <View style={styles.container}>
         <TextInput
           style={styles.input}
@@ -83,11 +78,10 @@ const LoginScreen = ({ navigation }) => {
             </TouchableOpacity>
           </>
         )}
-        <TouchableOpacity onPress={() => alert('Quên mật khẩu?')} style={styles.forgotPassword}>
+        <TouchableOpacity onPress={() => alert('Liên hệ Giáo Vụ Khoa để đổi mật khẩu')} style={styles.forgotPassword}>
           <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
         </TouchableOpacity>
       </View>
-    </AppContext.Provider>
   );
 };
 

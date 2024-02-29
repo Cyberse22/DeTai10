@@ -1,20 +1,18 @@
 import React, { useContext } from "react";
-import { Text } from "react-native";
+import { Button } from "react-native";
 import MyContext from "../../configs/MyContext";
 
-const Logout = () => {
-    const [user, dispatcher] = useContext(MyContext)
+const Logout = ({ navigation }) => {
+    const [user, dispatch] = useContext(MyContext)
 
     const logout = () => {
         dispatch({
-            "tpye" : "logout"
+            "type" : "logout"
         })
     }
 
     if(user===null)
-        return <Text>WELCOME</Text>
-
-    return <Button title="Logout" onPress = {logout} />
+        return <Button title="Logout" onPress = {logout} />
 }
 
 export default Logout

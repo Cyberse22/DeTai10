@@ -1,18 +1,30 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { endpoints } from '../../configs/API';
+import Logout from '../User/Logout';
 
-const StudentHome = () => {
-  const studentInfo = {
-    name: 'Nguyễn Văn Sinh',
-    studentId: '123456',
-    email: 'sinhnguyen@example.com',
-    major: 'Computer Science',
-  };
+const StudentHome = ({ navigation }) => {
+  const [studentInfo, setStudentInfo] = useState(null);
+  const [registeredThesis, setRegisteredThesis] = useState([]);
 
-  const registeredThesis = [
-    { id: 1, title: 'Thesis 1', instructor: 'Dr. John Doe' },
-    { id: 2, title: 'Thesis 2', instructor: 'Dr. Jane Smith' },
-  ];
+  useEffect(() =>{
+    axios.get(endpoints.currentUser)
+    .then(response => {
+      setStudentInfo(response.data);
+    })
+    . catch(error => {
+      console.error(error);
+    });
+
+    axios.get(endpoints.myThesis)
+    .then(response => {
+      setRegisteredThesis(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }, []);
 
   const handleRegisterThesis = () => {
     alert('Chức năng đang được phát triển');
@@ -25,19 +37,16 @@ const StudentHome = () => {
   const handleChatWithInstructor = () => {
     alert('Chức năng đang được phát triển');
   };
-
-  const handleLogout = () => {
-    alert('Chức năng đăng xuất');
-  };
+  
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Thông tin sinh viên</Text>
       <View style={styles.studentInfo}>
-        <Text>Họ và tên: {studentInfo.name}</Text>
-        <Text>Mã sinh viên: {studentInfo.studentId}</Text>
-        <Text>Email: {studentInfo.email}</Text>
-        <Text>Ngành học: {studentInfo.major}</Text>
+        <Text>Họ và tên: {studentInfo?.name}</Text>
+        <Text>Mã sinh viên: {studentInfo?.studentId}</Text>
+        <Text>Email: {studentInfo?.email}</Text>
+        <Text>Vai trò: {studentInfo?.role}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleRegisterThesis}>
@@ -49,9 +58,9 @@ const StudentHome = () => {
         <TouchableOpacity style={styles.button} onPress={handleChatWithInstructor}>
           <Text style={styles.buttonText}>Chat với giảng viên</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleLogout}>
-          <Text style={styles.buttonText}>Đăng xuất</Text>
-        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Logout navigation={navigation} />
       </View>
     </View>
   );

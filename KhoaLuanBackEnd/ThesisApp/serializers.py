@@ -48,7 +48,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['id', 'student']
+        fields = ['student']
 
 
 class LectureSerializer(serializers.ModelSerializer):
@@ -56,7 +56,7 @@ class LectureSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lecture
-        fields = ['id', 'lecture']
+        fields = ['lecture']
 
 
 class DeanSerializer(serializers.ModelSerializer):
@@ -64,7 +64,7 @@ class DeanSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dean
-        fields = ['id', 'dean']
+        fields = ['dean']
 
 
 class CouncilMemberSerializer(serializers.ModelSerializer):
@@ -72,7 +72,7 @@ class CouncilMemberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CouncilMember
-        fields = '__all__'
+        fields = ['lecture', 'council_role']
 
 
 class CouncilSerializer(serializers.ModelSerializer):
