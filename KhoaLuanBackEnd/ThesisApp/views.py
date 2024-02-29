@@ -2,6 +2,7 @@ from io import BytesIO
 from re import search
 import base64
 import matplotlib
+from django.core.exceptions import ObjectDoesNotExist
 from matplotlib import pyplot as plt
 
 from django.db.models import Avg
@@ -113,29 +114,46 @@ class CouncilViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.ListAPIV
         council_instance = get_object_or_404(Council, pk=pk)
         council_role = request.data.get('council_role', None)
         lecture_id = request.data.get('user_id', None)
-        lecture = Lecture.objects.get(pk=lecture_id)
-        member = CouncilMember.objects.filter(council=council_instance, lecture=lecture).first()
-        member.council_role = council_role
-        member.save()
 
-        if (council_role == 'Reviewer'):
+        try:
+            lecture = Lecture.objects.get(pk=lecture_id)
+        except ObjectDoesNotExist:
+            return Response({'error': 'Không tìm thấy giảng viên.'}, status=status.HTTP_404_NOT_FOUND)
+
+        member = CouncilMember.objects.filter(council=council_instance, lecture=lecture).first()
+
+        if member:
+            member.council_role = council_role
+            member.save()
+
+        if council_role == 'Reviewer':
             subject = council_instance.name
-            message = f'Chào {lecture.name}, bạn đã được trở thành phản biện của hội đồng {council_instance.name}'
+            message = f'Chào {lecture.lecture.last_name} {lecture.lecture.first_name}, bạn đã được trở thành phản biện của hội đồng {council_instance.name}'
             email_from = settings.EMAIL_HOST_USER
-            recipient_list = [lecture.email]
+            recipient_list = [lecture.lecture.email]
             send_mail(subject, message, email_from, recipient_list)
 
-        return Response({'message': 'Thành viên đã được cập nhật thành công'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Thành viên đã được cập nhật thành công'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Không tìm thấy thành viên trong hội đồng.'}, status=status.HTTP_404_NOT_FOUND)
 
     @action(methods=['get'], detail=False, url_path='lecture-council')
     def lecture_council(self, request):
-        my_councils = request.user.councils.all()
-        councils = self.queryset.filter(id__in=my_councils)
+        user = request.user
+
+        try:
+            lecture = Lecture.objects.get(lecture=user)
+        except Lecture.DoesNotExist:
+            return Response({'message': 'User không phải là giảng viên'}, status=status.HTTP_400_BAD_REQUEST)
+
+        my_councils = Council.objects.filter(members_council__lecture=lecture)
+
+        search = request.query_params.get('search', None)
         if search:
-            councils = councils.filter(name__icontains=search)
+            my_councils = my_councils.filter(name__icontains=search)
 
         paginator = self.pagination_class()
-        paginated_council = paginator.paginate_queryset(councils, request)
+        paginated_council = paginator.paginate_queryset(my_councils, request)
         serializer = CouncilSerializer(paginated_council, many=True)
 
         return paginator.get_paginated_response(serializer.data)
