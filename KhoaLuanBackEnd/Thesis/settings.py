@@ -88,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'thesisdb',
         'USER': 'root',
-        'PASSWORD': 'Admin@123',
+        'PASSWORD': 'root',
         'HOST': ''
     }
 }
@@ -176,3 +176,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "kietnguyen2226@gmail.com"
 EMAIL_HOST_PASSWORD = "uxnn vlnw irfh iwsm"
+
+SALESFORCE_DB_ALIAS = 'default'
